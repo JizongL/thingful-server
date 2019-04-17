@@ -33,6 +33,12 @@ describe('Reviews Endpoints', function() {
       )
     )
 
+    it(`responds 401 'Unauthorized request' when invalid password`, () => {
+      const userInvalidPass = {user_name:testUsers[0].user_name,password:'wrong'}
+      return supertest(app)
+      .post('/api/reviews')
+      .set('Authorization',helpers.makeAuthHeader(userInvalidPass))
+    })
     it(`creates an review, responding with 201 and the new review`, function() {
       this.retries(3)
       const testThing = testThings[0]
@@ -46,6 +52,7 @@ describe('Reviews Endpoints', function() {
       return supertest(app)
         .post('/api/reviews')
         .send(newReview)
+        .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
         .expect(201)
         .expect(res => {
           expect(res.body).to.have.property('id')
@@ -93,6 +100,7 @@ describe('Reviews Endpoints', function() {
 
         return supertest(app)
           .post('/api/reviews')
+          .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
           .send(newReview)
           .expect(400, {
             error: `Missing '${field}' in request body`,
