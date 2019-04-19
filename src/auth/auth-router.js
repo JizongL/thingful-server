@@ -23,7 +23,14 @@ authRouter
           return res.status(400).json({
             error:'Incorrect user_name or password'
           })
-        res.send('ok')    
+       return AuthService.comparePasswords(loginUser.password,dbUser.password)
+        .then(comparematch=>{
+          if(!comparematch)
+            return res.status(400).json({
+              error: 'Incorrect user_name or password',
+            })
+            res.send('ok')
+        })    
       })
       .catch(next)      
   })

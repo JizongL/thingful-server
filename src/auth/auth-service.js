@@ -1,4 +1,6 @@
 'use strict';
+const bcrypt = require('bcryptjs')
+
 const AuthService = {
   getUserWithUserName(db, user_name) {
     return db('thingful_users')
@@ -16,6 +18,9 @@ const AuthService = {
       .where({ user_name })
       .first()
   },
+  comparePasswords(password,hash){
+    return bcrypt.compare(password,hash)
+  }
 };
 
 module.exports = AuthService;
