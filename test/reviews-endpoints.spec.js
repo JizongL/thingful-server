@@ -49,10 +49,13 @@ describe('Reviews Endpoints', function() {
         thing_id: testThing.id,
         user_id: testUser.id,
       }
+      //console.log(helpers.makeAuthHeader(testUser))
       return supertest(app)
         .post('/api/reviews')
+        
+        .set('Authorization', helpers.makeAuthHeader(testUser))
         .send(newReview)
-        .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
+       
         .expect(201)
         .expect(res => {
           expect(res.body).to.have.property('id')
