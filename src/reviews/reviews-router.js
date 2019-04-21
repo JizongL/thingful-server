@@ -19,7 +19,7 @@ reviewsRouter
         return res.status(400).json({
           error: `Missing '${key}' in request body`
         })
-
+        
     ReviewsService.insertReview(
       req.app.get('db'),
       newReview
