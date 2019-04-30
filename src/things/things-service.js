@@ -30,6 +30,7 @@ const ThingsService = {
         'usr.id',
       )
       .groupBy('thg.id', 'usr.id')
+      
   },
 
   getById(db, id) {
